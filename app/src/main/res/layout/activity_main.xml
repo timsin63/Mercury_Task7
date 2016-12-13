@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
@@ -10,9 +11,42 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.user.task_7.MainActivity">
 
-    <Button
-        android:id="@+id/play"
-        android:background="@drawable/play"
-        android:layout_width="@dimen/button_size"
-        android:layout_height="@dimen/button_size" />
-</RelativeLayout>
+    <TextView
+        android:id="@+id/track_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_vertical_margin">
+        <Button
+            android:id="@+id/play"
+            android:background="@drawable/play"
+            android:layout_width="@dimen/button_size"
+            android:layout_height="@dimen/button_size"
+            />
+        <Button
+            android:id="@+id/stop"
+            android:layout_marginLeft="@dimen/activity_vertical_margin"
+            android:layout_width="@dimen/button_size"
+            android:layout_height="@dimen/button_size"
+            android:background="@drawable/stop"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/activity_vertical_margin">
+        <Button
+            android:id="@+id/volume_btn"
+            android:layout_width="@dimen/button_size"
+            android:layout_height="@dimen/button_size"
+            android:background="@drawable/volume_on"/>
+        <android.support.v7.widget.AppCompatSeekBar
+            android:id="@+id/volume_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
+    </LinearLayout>
+
+</LinearLayout>
