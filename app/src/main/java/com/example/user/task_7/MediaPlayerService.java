@@ -1,24 +1,37 @@
 package com.example.user.task_7;
 
+import android.app.Notification;
 import android.app.Service;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.AudioManager;
+import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
 import android.widget.Button;
 
 import java.io.IOException;
+import java.net.URI;
+import java.net.URL;
+import java.util.HashMap;
 
 public class MediaPlayerService extends Service implements MediaPlayer.OnPreparedListener, MediaPlayer.OnCompletionListener, MediaPlayer.OnErrorListener {
 
     private MediaPlayer mediaPlayer;
-    static final String TRACK_URL = "https://cs9-6v4.vk.me/p15/2d1e0352a66c20.mp3?extra=SNZm2QRDVb8-MaB2JkBKxzimwTszfKK5D8QxrgRodsVaQszKerpxi17Hryl8fVW0cVutrLDrMUKgOr9Nghzw_ShBDIcmj6c9EbVBOdemwDZkqPDc1Qd6CR19HO0u33yA6mUVXB7s5Jk";
+    static final String TRACK_URL = "https://cs1-49v4.vk-cdn.net/p14/5b0776b44aab02.mp3?extra=J05DiO6CaWQiUYj-nNnWOt-jtNdP_7PiNNW4tSpdckkALY49X-hcswsUoXi0WvssmmxBA3eaMiB27f1cchhmWtqVPia35K83My_-AZ0CobtZiI3trz9rXcWi5htUOXb4ZViM1K2Jz2k";
     static final String TAG = "MEDIA_PLAYER_SERVICE";
     int currentPos = 0;
     Button playPauseButton;
     AudioManager audioManager;
+    Notification notification;
+    String artist, title;
+    Bitmap cover;
+
+    MediaMetadataRetriever metadataRetriever;
 
 
     private final IBinder mediaPlayerBinder = new MediaPlayerBinder();
@@ -42,6 +55,13 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnPrepare
             Log.e(TAG, e.getLocalizedMessage());
         }
         Log.d(TAG, "onCreate");
+
+
+        notification = new Notification.Builder(getApplicationContext())
+                .setSmallIcon(R.drawable.headphones)
+                .setContentTitle(title)
+                .setContentText(artist)
+                .build();
     }
 
     @Override
@@ -82,9 +102,6 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnPrepare
     }
 
 
-//    public String getTrackName(){
-//        return mediaPlayer.;
-//    }
 
     public void playOrPause(){
 
@@ -102,10 +119,27 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnPrepare
             return;
         }
 
+        metadataRetriever = new MediaMetadataRetriever();
+
+
+        metadataRetriever.setDataSource(TRACK_URL, new HashMap<String, String>());
+        title = metadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
+        artist = metadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);
+        byte[] byteCover = metadataRetriever.getEmbeddedPicture();
+        cover = BitmapFactory.decodeByteArray(byteCover, 0, byteCover.length);
+        Log.d(TAG, title);
+
         mediaPlayer.prepareAsync();
 
     }
 
+    public String getTrackName(){
+        return artist + ": " + title;
+    }
+
+    public Bitmap getCover(){
+        return cover;
+    }
 
     public void stop(){
         mediaPlayer.stop();

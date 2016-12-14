@@ -16,7 +16,9 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.SeekBar;
+import android.widget.TextView;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -44,6 +46,9 @@ public class MainActivity extends AppCompatActivity {
 
         buttonPlay = (Button) findViewById(R.id.play);
 
+        final TextView trackNameView = (TextView) findViewById(R.id.track_title);
+        final ImageView coverView = (ImageView) findViewById(R.id.cover);
+
         buttonPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -51,8 +56,11 @@ public class MainActivity extends AppCompatActivity {
                 mediaPlayerService.playOrPause();
                 if (mediaPlayerService.isAudioPlaying()) {
                     buttonPlay.setBackgroundResource(R.drawable.pause);
+                    trackNameView.setText(mediaPlayerService.getTrackName());
+                    coverView.setImageBitmap(mediaPlayerService.getCover());
                 } else {
                     buttonPlay.setBackgroundResource(R.drawable.play);
+
                 }
             }
         });
