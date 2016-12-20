@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Task_7</string>
+    <string name="null_position">0:00</string>
 </resources>

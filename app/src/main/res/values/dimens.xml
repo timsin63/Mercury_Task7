@@ -3,4 +3,6 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="button_size">70dp</dimen>
+    <dimen name="track_time">30dp</dimen>
+    <dimen name="track_name_size">35sp</dimen>
 </resources>
